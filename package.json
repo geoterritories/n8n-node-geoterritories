@@ -18,8 +18,8 @@
 		"url": "https://github.com/geoterritories/n8n-node-geoterritories.git"
 	},
 	"scripts": {
-		"build": "n8n-node build",
-		"dev": "docker-compose -f ./self-hosted-n8n-test-instance/docker-compose.yml --profile cpu up -d",
+		"build": "n8n-node build && docker-compose -f ../self-hosted-ai-starter-kit/docker-compose.yml restart n8n",
+		"dev": "docker-compose -f ../self-hosted-ai-starter-kit/docker-compose.yml --profile cpu up -d",
 		"build:watch": "tsc --watch",
 		"lint": "n8n-node lint",
 		"lint:fix": "n8n-node lint --fix",
@@ -33,10 +33,10 @@
 		"n8nNodesApiVersion": 1,
 		"strict": true,
 		"credentials": [
-			"dist/credentials/GeofencesOAuth2Api.credentials.js"
+			"dist/credentials/GeoTerritoriesOAuth2Api.credentials.js"
 		],
 		"nodes": [
-			"dist/nodes/Geofence/Geofence.node.js"
+			"dist/nodes/GeoTerritories/GeoTerritories.node.js"
 		]
 	},
 	"devDependencies": {
