@@ -1,0 +1,45 @@
+{
+	"node": "n8n-nodes-geoterritories",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": [
+		"Geography",
+		"Geofence",
+		"GIS",
+		"Mapping",
+		"Territory Management",
+		"Lead Routing",
+		"Service Area",
+		"Workforce Management",
+		"Route Optimization",
+		"Delivery Management",
+		"Logistics"
+	],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://github.com/geoterritories/n8n-node-geoterritories.git#"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/geoterritories/n8n-node-geoterritories.git#readme"
+			}
+		],
+		"gitHubRepo": {
+			"url": "https://github.com/geoterritories/n8n-node-geoterritories.git"
+		},
+		"tags": [
+			"geofence",
+			"gis",
+			"mapping",
+			"territory management",
+			"lead routing",
+			"service area",
+			"workforce management",
+			"route optimization",
+			"delivery management",
+			"logistics"
+		]
+	}
+}
