@@ -7,7 +7,7 @@ export class GeoTerritoriesOAuth2Api implements ICredentialType {
 
 	displayName = 'GeoTerritories OAuth2 Api';
 
-	icon: Icon = { light: 'file:../icons/github.svg', dark: 'file:../icons/github.dark.svg' };
+	icon: Icon = { light: 'file:dark_favicon.svg', dark: 'file:dark_favicon.svg' };
 
 	documentationUrl = 'https://docs.github.com/en/apps/oauth-apps';
 
@@ -15,46 +15,46 @@ export class GeoTerritoriesOAuth2Api implements ICredentialType {
 		{
 			displayName: 'Grant Type',
 			name: 'grantType',
-			type: 'string',
+			type: 'hidden',
 			default: 'pkce',
 		},
 		{
 			displayName: 'Authorization URL',
 			name: 'authUrl',
-			type: 'string',
+			type: 'hidden',
 			default: 'http://localhost:3000/api/auth/oauth2/authorize',
 			required: true,
 		},
 		{
 			displayName: 'Scope',
 			name: 'scope',
-			type: 'string',
+			type: 'hidden',
 			default: 'openid offline_access read:validate',
 		},
 		{
 			displayName: 'Auth URI Query Parameters',
 			name: 'authQueryParameters',
-			type: 'string',
-			default: 'resource=http://localhost:5678',
+			type: 'hidden',
+			default: 'resource=http://localhost:5678&access_type=offline',
 		},
 		{
 			displayName: 'Access Token URL',
 			name: 'accessTokenUrl',
-			type: 'string',
+			type: 'hidden',
 			default: 'http://host.docker.internal:3000/api/auth/oauth2/token',
 			required: true,
 		},
 		{
 			displayName: 'Send Additional Body Properties',
 			name: 'sendAdditionalBodyProperties',
-			type: 'string',
+			type: 'hidden',
 			default: 'true',
 			required: true,
 		},
 		{
 			displayName: 'Additional Body Properties',
 			name: 'additionalBodyProperties',
-			type: 'string',
+			type: 'hidden',
 			default: '{"resource": "http://localhost:5678"}',
 			required: true,
 		},
@@ -62,7 +62,7 @@ export class GeoTerritoriesOAuth2Api implements ICredentialType {
 		{
 			displayName: 'Authentication',
 			name: 'authentication',
-			type: 'string',
+			type: 'hidden',
 			default: 'header',
 		},
 	];

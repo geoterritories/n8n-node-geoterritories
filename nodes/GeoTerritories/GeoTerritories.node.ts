@@ -15,7 +15,7 @@ export class GeoTerritories implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'GeoTerritories',
 		name: 'GeoTerritories',
-		icon: 'file:geoFencing.svg',
+		icon: 'file:dark_favicon.svg',
 		group: ['transform'],
 		version: 1,
 		description: 'Validate a geo point against a custom geo fence.',
@@ -218,8 +218,6 @@ export class GeoTerritories implements INodeType {
 					json: true,
 				},
 			);
-
-			console.log(response);
 
 			const executionData = this.helpers.constructExecutionMetaData(
 				this.helpers.returnJsonArray(response),
