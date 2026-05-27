@@ -3,22 +3,17 @@ import type {
 	INodeType,
 	INodeTypeDescription,
 	INodeExecutionData,
-	// IHttpRequestOptions,
 } from 'n8n-workflow';
-import { NodeConnectionTypes } from 'n8n-workflow';
-import { ILoadOptionsFunctions } from 'n8n-workflow';
-import { NodeApiError } from 'n8n-workflow';
-import { JsonObject } from 'n8n-workflow';
-// import { getFences } from './listSearch/getFences';
+import { NodeConnectionTypes, ILoadOptionsFunctions, NodeApiError, JsonObject } from 'n8n-workflow';
 
 export class GeoTerritories implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'GeoTerritories',
-		name: 'GeoTerritories',
+		subtitle: 'Validate a geo point against a custom geo fence.',
+		name: 'geoTerritories',
 		icon: 'file:dark_favicon.svg',
 		group: ['transform'],
 		version: 1,
-		description: 'Validate a geo point against a custom geo fence.',
 		defaults: {
 			name: 'GeoTerritories',
 		},
@@ -26,7 +21,7 @@ export class GeoTerritories implements INodeType {
 		outputs: [NodeConnectionTypes.Main],
 		credentials: [
 			{
-				name: 'GeoTerritoriesOAuth2Api',
+				name: 'geoTerritoriesOAuth2Api',
 				required: true,
 			},
 		],
@@ -41,7 +36,7 @@ export class GeoTerritories implements INodeType {
 					{
 						name: 'Validate',
 						value: 'validate',
-						description: 'This resource validate a geo location againt a geo fence.',
+						description: 'This resource validate a geo location againt a geo fence',
 					}
 				],
 				default: 'validate',
@@ -57,6 +52,7 @@ export class GeoTerritories implements INodeType {
 						name: 'Validate With Latitude and Longitude',
 						value: 'latitudeLongitude',
 						description: 'Validate a latitude longtiude points against a geo fence',
+						action: 'Validate a latitude longtiude points against a geo fence',
 					}
 				],
 				default: 'latitudeLongitude',
@@ -69,9 +65,9 @@ export class GeoTerritories implements INodeType {
 				required: true,
 				options: [
 					{
-						name: 'Validate Against One Fence',
-						value: 'oneFence',
-						description: 'Validate againt one selected fence',
+						name: 'Validate Against All Fences',
+						value: 'allFences',
+						description: 'Validate against all the available fences',
 					},
 					{
 						name: 'Validate Against Multiple Fences',
@@ -79,18 +75,19 @@ export class GeoTerritories implements INodeType {
 						description: 'Validate against multiple selected fences',
 					},
 					{
-						name: 'Validate Against All Fences',
-						value: 'allFences',
-						description: 'Validate against all the available fences',
-					},
+						name: 'Validate Against One Fence',
+						value: 'oneFence',
+						description: 'Validate against one selected fence',
+					}
 				],
 				default: 'oneFence',
 			},
 
 			{
-				displayName: 'Fence List',
+				displayName: 'Fence List Name or ID',
 				name: 'fenceList',
 				type: 'options',
+				description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 				typeOptions: {
 					loadOptionsMethod: 'getFences',
 				},
@@ -102,20 +99,19 @@ export class GeoTerritories implements INodeType {
 				},
 			},
 			{
-				displayName: 'Fence List',
+				displayName: 'Fence List Names or IDs',
 				name: 'fenceListMultiSelect',
 				type: 'multiOptions',
 				typeOptions: {
 					loadOptionsMethod: 'getFences',
 				},
 				default: [], // Initially selected options
-				description: 'The events to be monitored',
+				description: 'The events to be monitored. Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 				displayOptions: {
 					show: {
 						validateAgainst: ['multipleFences'],
 					},
 				},
-
 			},
 			{
 				displayName: 'Latitude',
@@ -144,6 +140,8 @@ export class GeoTerritories implements INodeType {
 				},
 			},
 		],
+		usableAsTool: true,
+		description: 'n8n node to validate a geo point against a custom geo fence.'
 	};
 
 	methods = {
@@ -152,7 +150,7 @@ export class GeoTerritories implements INodeType {
 				try {
 					const response = await this.helpers.httpRequestWithAuthentication.call(
 						this,
-						'GeoTerritoriesOAuth2Api',
+						'geoTerritoriesOAuth2Api',
 						{
 							headers: {
 								'Accept': 'application/json',
@@ -175,18 +173,10 @@ export class GeoTerritories implements INodeType {
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-
-		// let responseData;
-		// const resource = this.getNodeParameter('resource', 0) as string;
-		// const operation = this.getNodeParameter('operation', 0) as string;
-		//Get credentials the user provided for this node
-		// const credentials = await this.getCredentials('friendGridApi') as IDataObject;
 		const returnData: INodeExecutionData[] = [];
-
 		try {
 			const validationMode = this.getNodeParameter('validateAgainst', 0) as string;
 			const fenceIds: string[] = [];
-
 			switch (validationMode) {
 				case 'oneFence':
 					fenceIds.push(this.getNodeParameter('fenceList', 0) as string);
@@ -197,7 +187,6 @@ export class GeoTerritories implements INodeType {
 				default:
 					break;
 			}
-
 			const response = await this.helpers.httpRequestWithAuthentication.call(
 				this,
 				'GeoTerritoriesOAuth2Api',
@@ -228,6 +217,14 @@ export class GeoTerritories implements INodeType {
 
 			return [returnData];
 		} catch (error) {
+			if (this.continueOnFail()) {
+				const executionData = this.helpers.constructExecutionMetaData(
+					this.helpers.returnJsonArray({ error: (error as Error).message }),
+					{ itemData: { item: 0 } },
+				);
+				returnData.push(...executionData);
+				return [returnData];
+			}
 			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}

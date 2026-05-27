@@ -1,13 +1,13 @@
 import type { Icon, ICredentialType, INodeProperties } from 'n8n-workflow';
 
 export class GeoTerritoriesOAuth2Api implements ICredentialType {
-	name = 'GeoTerritoriesOAuth2Api';
+	name = 'geoTerritoriesOAuth2Api';
 
 	extends = ['oAuth2Api'];
 
-	displayName = 'GeoTerritories OAuth2 Api';
+	displayName = 'Geo Territories OAuth2 API';
 
-	icon: Icon = { light: 'file:dark_favicon.svg', dark: 'file:dark_favicon.svg' };
+	icon: Icon = { light: 'file:light_favicon.svg', dark: 'file:dark_favicon.svg' };
 
 	documentationUrl = 'https://docs.github.com/en/apps/oauth-apps';
 
@@ -29,7 +29,7 @@ export class GeoTerritoriesOAuth2Api implements ICredentialType {
 			displayName: 'Scope',
 			name: 'scope',
 			type: 'hidden',
-			default: 'openid offline_access read:validate',
+			default: 'openid offline_access read:validate read:organization',
 		},
 		{
 			displayName: 'Auth URI Query Parameters',
