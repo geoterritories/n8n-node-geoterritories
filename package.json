@@ -1,5 +1,5 @@
 {
-	"name": "n8n-nodes-geoterritories",
+	"name": "@geoterritories/n8n-nodes-geoterritories",
 	"version": "0.1.0",
 	"description": "Native n8n node to add Geo territories for your n8n automations.",
 	"license": "MIT",
@@ -18,7 +18,8 @@
 		"url": "https://github.com/geoterritories/n8n-node-geoterritories.git"
 	},
 	"scripts": {
-		"build": "n8n-node build && docker-compose -f ../self-hosted-ai-starter-kit/docker-compose.yml restart n8n",
+		"build": "n8n-node build",
+		"build:local": "n8n-node build && docker-compose -f ../self-hosted-ai-starter-kit/docker-compose.yml restart n8n",
 		"dev": "docker-compose -f ../self-hosted-ai-starter-kit/docker-compose.yml --profile cpu up -d",
 		"build:watch": "tsc --watch",
 		"lint": "n8n-node lint",

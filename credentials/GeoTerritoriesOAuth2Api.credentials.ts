@@ -19,10 +19,16 @@ export class GeoTerritoriesOAuth2Api implements ICredentialType {
 			default: 'pkce',
 		},
 		{
+			displayName: 'Base URL',
+			name: 'baseUrl',
+			type: 'hidden',
+			default: 'https://api.geoterritories.com',
+		},
+		{
 			displayName: 'Authorization URL',
 			name: 'authUrl',
 			type: 'hidden',
-			default: 'http://localhost:3000/api/auth/oauth2/authorize',
+			default: 'https://app.geoterritories.com/api/auth/oauth2/authorize',
 			required: true,
 		},
 		{
@@ -35,13 +41,13 @@ export class GeoTerritoriesOAuth2Api implements ICredentialType {
 			displayName: 'Auth URI Query Parameters',
 			name: 'authQueryParameters',
 			type: 'hidden',
-			default: 'resource=http://localhost:5678&access_type=offline',
+			default: 'resource=https://api.geoterritories.com&access_type=offline',
 		},
 		{
 			displayName: 'Access Token URL',
 			name: 'accessTokenUrl',
 			type: 'hidden',
-			default: 'http://host.docker.internal:3000/api/auth/oauth2/token',
+			default: 'https://app.geoterritories.com/api/auth/oauth2/token',
 			required: true,
 		},
 		{
@@ -55,7 +61,7 @@ export class GeoTerritoriesOAuth2Api implements ICredentialType {
 			displayName: 'Additional Body Properties',
 			name: 'additionalBodyProperties',
 			type: 'hidden',
-			default: '{"resource": "http://localhost:5678"}',
+			default: '{"resource": "https://api.geoterritories.com"}',
 			required: true,
 		},
 

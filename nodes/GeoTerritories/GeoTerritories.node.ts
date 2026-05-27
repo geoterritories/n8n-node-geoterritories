@@ -148,6 +148,8 @@ export class GeoTerritories implements INodeType {
 		loadOptions: {
 			async getFences(this: ILoadOptionsFunctions) {
 				try {
+					const credentials = await this.getCredentials('geoTerritoriesOAuth2Api');
+					const baseUrl = credentials.baseUrl as string;
 					const response = await this.helpers.httpRequestWithAuthentication.call(
 						this,
 						'geoTerritoriesOAuth2Api',
@@ -156,16 +158,13 @@ export class GeoTerritories implements INodeType {
 								'Accept': 'application/json',
 							},
 							method: 'GET',
-							url: `http://host.docker.internal:8787/fences`,
+							url: `${baseUrl}/fences`,
 							json: true,
 						},
 					);
 
 					return response;
 				} catch (error) {
-
-
-
 					throw new NodeApiError(this.getNode(), error as JsonObject);
 				}
 			},
@@ -176,6 +175,8 @@ export class GeoTerritories implements INodeType {
 		const returnData: INodeExecutionData[] = [];
 		try {
 			const validationMode = this.getNodeParameter('validateAgainst', 0) as string;
+			const credentials = await this.getCredentials('geoTerritoriesOAuth2Api');
+			const baseUrl = credentials.baseUrl as string;
 			const fenceIds: string[] = [];
 			switch (validationMode) {
 				case 'oneFence':
@@ -195,7 +196,7 @@ export class GeoTerritories implements INodeType {
 						'Accept': 'application/json',
 					},
 					method: 'POST',
-					url: `http://host.docker.internal:8787/validate`,
+					url: `${baseUrl}/validate`,
 					body: {
 						mode: validationMode,
 						coordinates: {
