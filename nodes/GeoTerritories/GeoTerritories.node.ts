@@ -9,7 +9,7 @@ import { NodeConnectionTypes, ILoadOptionsFunctions, NodeApiError, JsonObject } 
 export class GeoTerritories implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'GeoTerritories',
-		subtitle: 'Validate a geo point against a custom geo fence.',
+		subtitle: 'Validate against custom geo fences',
 		name: 'geoTerritories',
 		icon: 'file:dark_favicon.svg',
 		group: ['transform'],
@@ -189,7 +189,7 @@ export class GeoTerritories implements INodeType {
 			}
 			const response = await this.helpers.httpRequestWithAuthentication.call(
 				this,
-				'GeoTerritoriesOAuth2Api',
+				'geoTerritoriesOAuth2Api',
 				{
 					headers: {
 						'Accept': 'application/json',
