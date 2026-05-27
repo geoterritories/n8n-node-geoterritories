@@ -1,6 +1,6 @@
 {
 	"name": "@geoterritories/n8n-nodes-geoterritories",
-	"version": "0.1.1-2",
+	"version": "0.1.1-3",
 	"description": "Native n8n node to add Geo territories for your n8n automations.",
 	"license": "MIT",
 	"homepage": "https://geoterritories.com",
