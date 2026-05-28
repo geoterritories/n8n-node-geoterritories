@@ -102,6 +102,6 @@ jobs:
         #   .npmrc here before publishing.
         run: |
           [ -n "$NPM_TOKEN" ] && pnpm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
-          pnpm run release
+          pnpm run release --tag beta
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
