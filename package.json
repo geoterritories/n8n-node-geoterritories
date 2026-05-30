@@ -40,6 +40,9 @@
 			"dist/nodes/GeoTerritories/GeoTerritories.node.js"
 		]
 	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"devDependencies": {
 		"@n8n/node-cli": "*",
 		"eslint": "9.39.4",
