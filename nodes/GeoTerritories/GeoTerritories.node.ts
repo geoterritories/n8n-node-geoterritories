@@ -11,7 +11,10 @@ export class GeoTerritories implements INodeType {
 		displayName: 'GeoTerritories',
 		subtitle: 'Validate against custom geo fences',
 		name: 'geoTerritories',
-		icon: 'file:dark_favicon.svg',
+		icon: {
+			light: 'file:../../icons/light_favicon.svg',
+			dark: 'file:../../icons/dark_favicon.svg'
+		},
 		group: ['transform'],
 		version: 1,
 		defaults: {
@@ -149,7 +152,7 @@ export class GeoTerritories implements INodeType {
 			async getFences(this: ILoadOptionsFunctions) {
 				try {
 					const credentials = await this.getCredentials('geoTerritoriesOAuth2Api');
-					const baseUrl = credentials.baseUrl as string;
+					const authBaseUrl = credentials.authBaseUrl as string;
 					const response = await this.helpers.httpRequestWithAuthentication.call(
 						this,
 						'geoTerritoriesOAuth2Api',
@@ -158,7 +161,7 @@ export class GeoTerritories implements INodeType {
 								'Accept': 'application/json',
 							},
 							method: 'GET',
-							url: `${baseUrl}/fences`,
+							url: `${authBaseUrl.includes('localhost') ? 'http://host.docker.internal:8787' : credentials.serviceBaseUrl}/fences`,
 							json: true,
 						},
 					);
@@ -176,7 +179,7 @@ export class GeoTerritories implements INodeType {
 		try {
 			const validationMode = this.getNodeParameter('validateAgainst', 0) as string;
 			const credentials = await this.getCredentials('geoTerritoriesOAuth2Api');
-			const baseUrl = credentials.baseUrl as string;
+			const authBaseUrl = credentials.authBaseUrl as string;
 			const fenceIds: string[] = [];
 			switch (validationMode) {
 				case 'oneFence':
@@ -196,7 +199,7 @@ export class GeoTerritories implements INodeType {
 						'Accept': 'application/json',
 					},
 					method: 'POST',
-					url: `${baseUrl}/validate`,
+					url: `${authBaseUrl.includes('localhost') ? 'http://host.docker.internal:8787' : credentials.serviceBaseUrl}/validate`,
 					body: {
 						mode: validationMode,
 						coordinates: {

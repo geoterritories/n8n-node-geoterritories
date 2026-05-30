@@ -7,7 +7,7 @@ export class GeoTerritoriesOAuth2Api implements ICredentialType {
 
 	displayName = 'Geo Territories OAuth2 API';
 
-	icon: Icon = { light: 'file:light_favicon.svg', dark: 'file:dark_favicon.svg' };
+	icon: Icon = { light: 'file:../icons/light_favicon.svg', dark: 'file:../icons/dark_favicon.svg' };
 
 	documentationUrl = 'https://docs.github.com/en/apps/oauth-apps';
 
@@ -19,16 +19,24 @@ export class GeoTerritoriesOAuth2Api implements ICredentialType {
 			default: 'pkce',
 		},
 		{
-			displayName: 'Base URL',
-			name: 'baseUrl',
+			displayName: 'Service URL',
+			description: 'Do not change unless you know what you are doing',
+			name: 'serviceBaseUrl',
 			type: 'hidden',
 			default: 'https://api.geoterritories.com',
+		},
+		{
+			displayName: 'Auth Base URL',
+			description: 'Do not change unless you know what you are doing',
+			name: 'authBaseUrl',
+			type: 'string',
+			default: 'https://app.geoterritories.com',
 		},
 		{
 			displayName: 'Authorization URL',
 			name: 'authUrl',
 			type: 'hidden',
-			default: 'https://app.geoterritories.com/api/auth/oauth2/authorize',
+			default: '={{$self["authBaseUrl"]}}/api/auth/oauth2/authorize',
 			required: true,
 		},
 		{
@@ -47,7 +55,7 @@ export class GeoTerritoriesOAuth2Api implements ICredentialType {
 			displayName: 'Access Token URL',
 			name: 'accessTokenUrl',
 			type: 'hidden',
-			default: 'https://app.geoterritories.com/api/auth/oauth2/token',
+			default: '={{$self["authBaseUrl"].includes("localhost") ? "http://host.docker.internal:3000": $self["authBaseUrl"]}}/api/auth/oauth2/token',
 			required: true,
 		},
 		{
